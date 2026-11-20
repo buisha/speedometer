@@ -1,0 +1,725 @@
+/* =========================
+   GLOBAL SETTINGS
+========================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --header: #202428;
+    --page: #ffffff;
+    --text: #252326;
+    --muted: #9da1a6;
+    --line: #242124;
+    --accent: #5d70e5;
+    --button: #242122;
+    --notice: #ffedc9;
+    --notice-text: #d47b00;
+    --panel: #f4f4f5;
+}
+
+body.dark {
+    --page: #171a1e;
+    --text: #f4f4f5;
+    --muted: #a6a9ae;
+    --line: #e8e8e8;
+    --button: #f0f0f0;
+    --panel: #24282d;
+    --notice: #40331d;
+    --notice-text: #ffc36b;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    background: var(--page);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    transition: background 0.2s, color 0.2s;
+}
+
+button {
+    font: inherit;
+    cursor: pointer;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.topbar {
+    height: 76px;
+    width: 100%;
+    background: var(--header);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 7.5%;
+    position: relative;
+    z-index: 5;
+
+    box-shadow: 0 3px 10px #0002;
+}
+
+.icon-button {
+    border: none;
+    color: white;
+    background: transparent;
+}
+
+.moon-button {
+    font-size: 34px;
+    line-height: 1;
+    padding: 4px;
+}
+
+.brand {
+    color: white;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 34px;
+    letter-spacing: -0.8px;
+}
+
+.brand-gauge {
+    display: inline-block;
+    color: #72c84c;
+    font-size: 32px;
+    margin: 0 1px;
+}
+
+.brand small {
+    font-size: 10px;
+    writing-mode: vertical-rl;
+    margin-left: 3px;
+}
+
+.menu-button {
+    width: 42px;
+    display: grid;
+    gap: 7px;
+    padding: 6px 0;
+}
+
+.menu-button span {
+    display: block;
+    height: 3px;
+    width: 36px;
+    border-radius: 3px;
+    background: white;
+}
+
+/* =========================
+   MENU
+========================= */
+
+.menu-panel {
+    position: absolute;
+    z-index: 8;
+    right: 5%;
+    top: 84px;
+
+    width: min(320px, 90vw);
+    padding: 20px;
+
+    background: var(--panel);
+    color: var(--text);
+
+    box-shadow: 0 8px 30px #0003;
+    border-radius: 12px;
+}
+
+.menu-panel h2 {
+    margin-bottom: 8px;
+    font-size: 20px;
+}
+
+.menu-panel p {
+    color: var(--muted);
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.menu-status {
+    margin: 15px 0;
+    font-size: 14px;
+}
+
+.menu-action {
+    border: none;
+    border-radius: 7px;
+    padding: 10px 13px;
+    background: var(--accent);
+    color: white;
+}
+
+/* =========================
+   MAIN APP LAYOUT
+========================= */
+
+.app {
+    width: 100%;
+    min-height: calc(100vh - 76px);
+
+    display: grid;
+
+    grid-template-columns:
+        1fr minmax(330px, 1.5fr) 1fr;
+
+    grid-template-rows:
+        minmax(520px, 1fr) auto auto auto auto;
+
+    align-items: center;
+    justify-items: center;
+
+    padding: 30px 4%;
+    column-gap: 20px;
+}
+
+/* =========================
+   MODE BUTTONS
+========================= */
+
+.mode-picker {
+    grid-column: 1;
+    grid-row: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+}
+
+.mode-button {
+    width: 118px;
+    height: 118px;
+
+    border-radius: 50%;
+    border: 6px solid #f1f1f1;
+
+    color: #a5a5a5;
+    background: #e5e5e5;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    transition: 0.2s;
+}
+
+.mode-button.active {
+    background: var(--accent);
+    color: white;
+    border-color: #d1d6ff;
+}
+
+/* =========================
+   SPEEDOMETER CENTER
+========================= */
+
+.meter-area {
+    grid-column: 2;
+    grid-row: 1;
+
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dial {
+    width: min(82vw, 355px);
+    aspect-ratio: 1;
+
+    border: 3px solid var(--line);
+    border-radius: 50%;
+
+    position: relative;
+    color: var(--text);
+
+    margin: 0 auto;
+}
+
+.dial-ticks,
+.dial-labels {
+    position: absolute;
+    inset: 0;
+}
+
+.tick {
+    position: absolute;
+    left: 50%;
+    top: 0;
+
+    width: 4px;
+    height: 13px;
+
+    background: var(--line);
+
+    transform-origin: 50% 176px;
+}
+
+.tick.major {
+    height: 18px;
+    width: 6px;
+}
+
+.dial-label {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+
+    font-size: 16px;
+
+    transform: translate(-50%, -50%);
+}
+
+/* =========================
+   NEEDLE
+========================= */
+
+.needle {
+    position: absolute;
+
+    left: calc(50% - 2px);
+    top: 50%;
+
+    width: 4px;
+    height: 43%;
+
+    background: #161416;
+
+    transform-origin: 50% 0;
+    transform: rotate(-150deg);
+
+    border-radius: 5px;
+    z-index: 2;
+
+    transition: transform 0.25s ease-out;
+}
+
+body.dark .needle {
+    background: white;
+}
+
+.needle-cap {
+    position: absolute;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+    background: #242124;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 3;
+    box-shadow: 0 2px 6px #0005;
+}
+
+body.dark .needle-cap {
+    background: #f3f3f3;
+}
+
+/* =========================
+   DIGITAL SPEED INSIDE DIAL
+========================= */
+
+.dial-digital {
+    position: absolute;
+
+    left: 50%;
+    bottom: 8%;
+
+    transform: translateX(-50%);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    z-index: 4;
+}
+
+.seven-segment {
+    font-family: "Courier New", monospace;
+    font-size: 54px;
+    line-height: 1;
+    font-weight: 700;
+}
+
+.dial-unit {
+    font-size: 16px;
+    color: #666;
+}
+
+body.dark .dial-unit {
+    color: #ccc;
+}
+
+/* =========================
+   DIGITAL MODE
+========================= */
+
+.digital-panel {
+    text-align: center;
+}
+
+.digital-number {
+    font-size: clamp(72px, 12vw, 125px);
+    font-weight: 300;
+    letter-spacing: -5px;
+    font-variant-numeric: tabular-nums;
+}
+
+.digital-unit {
+    color: var(--accent);
+    font-size: 22px;
+}
+
+.digital-caption {
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 3px;
+}
+
+/* =========================
+   SPEED UNITS
+========================= */
+
+.unit-picker {
+    grid-column: 3;
+    grid-row: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.unit-button {
+    border: none;
+    background: transparent;
+
+    color: var(--muted);
+    font-size: 20px;
+    padding: 4px;
+}
+
+.unit-button.selected {
+    color: var(--accent);
+}
+
+/* =========================
+   GPS INFORMATION
+========================= */
+
+.readout {
+    grid-column: 1 / -1;
+    grid-row: 2;
+
+    display: flex;
+    gap: 9px;
+
+    align-items: center;
+    justify-content: center;
+
+    color: var(--muted);
+    font-size: 13px;
+
+    margin: 8px 0 20px;
+}
+
+.readout strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.readout-divider {
+    margin: 0 8px;
+}
+
+/* =========================
+   START BUTTON
+========================= */
+
+.start-button {
+    grid-column: 1 / -1;
+    grid-row: 3;
+
+    width: 295px;
+    height: 86px;
+
+    border-radius: 17px;
+    border: 6px solid #c8c8c8;
+
+    background: var(--button);
+    color: white;
+
+    font-size: 24px;
+    font-weight: 800;
+
+    margin: 0 0 12px;
+
+    transition: 0.2s;
+}
+
+body.dark .start-button {
+    color: #222;
+    border-color: #555;
+}
+
+.start-button.running {
+    background: #b33d3d;
+    color: white;
+    border-color: #d9a0a0;
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+    grid-column: 1 / -1;
+    grid-row: 4;
+
+    min-height: 18px;
+
+    margin: 0 0 22px;
+
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+}
+
+/* =========================
+   GPS NOTICE
+========================= */
+
+.notice {
+    grid-column: 1 / -1;
+    grid-row: 5;
+
+    width: min(100%, 710px);
+    min-height: 59px;
+
+    padding: 13px 18px;
+
+    border-left: 6px solid #d88a00;
+    border-radius: 6px;
+
+    background: var(--notice);
+    color: var(--notice-text);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.notice button {
+    border: none;
+    background: transparent;
+
+    color: var(--notice-text);
+    font-size: 28px;
+    line-height: 1;
+}
+
+/* =========================
+   DOWNLOAD BUTTON
+========================= */
+
+.download-button {
+    position: fixed;
+
+    bottom: 24px;
+    left: 24px;
+
+    width: 48px;
+    height: 48px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #242124;
+    color: white;
+
+    font-size: 24px;
+
+    box-shadow: 0 2px 6px #0002;
+}
+
+/* =========================
+   MOBILE RESPONSIVE
+========================= */
+
+@media (max-width: 760px) {
+
+    .topbar {
+        height: 64px;
+        padding: 0 18px;
+    }
+
+    .brand {
+        font-size: 25px;
+    }
+
+    .brand-gauge {
+        font-size: 24px;
+    }
+
+    .app {
+        min-height: calc(100vh - 64px);
+
+        display: flex;
+        flex-direction: column;
+
+        align-items: center;
+        justify-content: center;
+
+        padding: 24px 16px 90px;
+
+        gap: 22px;
+    }
+
+    .mode-picker {
+        flex-direction: row;
+        gap: 18px;
+        order: 0;
+    }
+
+    .mode-button {
+        width: 82px;
+        height: 82px;
+
+        border-width: 4px;
+        font-size: 13px;
+    }
+
+    .meter-area {
+        order: 1;
+
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 280px;
+    }
+
+    .dial {
+        width: min(78vw, 310px);
+        margin: 0 auto;
+    }
+
+    .tick {
+        transform-origin: 50% 153px;
+    }
+
+    .tick.major {
+        height: 16px;
+    }
+
+    .dial-label {
+        font-size: 13px;
+    }
+
+    .needle-cap {
+        width: 30px;
+        height: 30px;
+    }
+
+    .seven-segment {
+        font-size: 44px;
+    }
+
+    .unit-picker {
+        order: 2;
+
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        justify-content: center;
+
+        gap: 12px 20px;
+    }
+
+    .unit-button {
+        font-size: 15px;
+    }
+
+    .readout {
+        order: 3;
+
+        margin: 0;
+
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .start-button {
+        order: 4;
+
+        width: min(295px, 90%);
+        height: 72px;
+    }
+
+    .status {
+        order: 5;
+        margin: -10px 0 0;
+    }
+
+    .notice {
+        order: 6;
+
+        font-size: 12px;
+        padding: 12px;
+    }
+
+    .download-button {
+        bottom: 14px;
+        left: 14px;
+    }
+}
+
+/* =========================
+   SMALL PHONE SCREENS
+========================= */
+
+@media (max-width: 380px) {
+
+    .dial {
+        width: 270px;
+    }
+
+    .mode-button {
+        width: 74px;
+        height: 74px;
+    }
+
+    .unit-button {
+        font-size: 13px;
+    }
+
+    .digital-number {
+        font-size: 75px;
+    }
+}

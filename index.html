@@ -1,0 +1,142 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#202428">
+    <title>Speedometer Live</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="topbar">
+        <button class="icon-button moon-button" id="themeButton">☾</button>
+
+        <a class="brand" href="#">
+            Speed<span class="brand-gauge">◉</span>Meter<small>.LIVE</small>
+        </a>
+
+        <button class="icon-button menu-button" id="menuButton">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </header>
+
+    <aside class="menu-panel" id="menuPanel" hidden>
+        <h2>Speedometer</h2>
+        <p>Live GPS speed is measured on this device.</p>
+        <div class="menu-status">
+            GPS status: <strong id="menuStatus">Not started</strong>
+        </div>
+        <button class="menu-action" id="resetButton">
+            Reset recorded data
+        </button>
+    </aside>
+
+    <main class="app">
+
+        <!-- Display modes -->
+        <section class="mode-picker">
+            <button class="mode-button active" id="analogMode">
+                ANALOG
+            </button>
+
+            <button class="mode-button" id="digitalMode">
+                DIGITAL
+            </button>
+        </section>
+
+        <!-- Speedometer -->
+        <section class="meter-area">
+
+            <div class="dial" id="dial">
+                <div class="dial-ticks" id="dialTicks"></div>
+                <div class="dial-labels" id="dialLabels"></div>
+
+                <div class="needle" id="needle"></div>
+                <div class="needle-cap"></div>
+
+                <div class="dial-digital">
+                    <div class="seven-segment" id="dialValue">0</div>
+                    <span class="dial-unit" id="dialUnit">km/h</span>
+                </div>
+            </div>
+
+            <!-- Digital speedometer -->
+            <div class="digital-panel" id="digitalPanel" hidden>
+                <div class="digital-number" id="digitalValue">
+                    0.0
+                </div>
+
+                <div class="digital-unit" id="digitalUnit">
+                    km/h
+                </div>
+
+                <div class="digital-caption">
+                    CURRENT SPEED
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Speed units -->
+        <section class="unit-picker">
+
+            <button class="unit-button" data-unit="ms">
+                meter/second
+            </button>
+
+            <button class="unit-button" data-unit="mph">
+                miles/hour
+            </button>
+
+            <button class="unit-button selected" data-unit="kmh">
+                km/hour
+            </button>
+
+        </section>
+
+        <!-- GPS information -->
+        <div class="readout">
+            <span>GPS accuracy</span>
+            <strong id="accuracy">—</strong>
+
+            <span class="readout-divider">|</span>
+
+            <span>Max speed</span>
+            <strong id="maxSpeed">0 km/h</strong>
+        </div>
+
+        <!-- Start / Stop -->
+        <button class="start-button" id="startButton">
+            START
+        </button>
+
+        <p class="status" id="status" role="status">
+            Ready to start GPS tracking
+        </p>
+
+        <!-- GPS notification -->
+        <div class="notice" id="notice">
+            <span>
+                GPS data is processed directly on your device.
+                Your location is not uploaded.
+            </span>
+
+            <button id="closeNotice">×</button>
+        </div>
+
+    </main>
+
+    <!-- Download button -->
+    <button class="download-button" id="downloadButton">
+        ⬇
+    </button>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+</body>
+</html>
